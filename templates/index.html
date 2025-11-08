@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Neeraj (Oma, Suar) Chatbot</title>
+    <!-- Your existing CSS from the first response goes here: style.css -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+
+    <div class="chat-container">
+        
+        <header class="chat-header">
+            <h2>Neeraj</h2>
+            <p>Online & Busy</p>
+        </header>
+
+        <!-- Message display area -->
+        <div class="chat-window" id="chat-window">
+            <!-- Initial Model Greeting -->
+            <div class="message model-message">
+                <p>Yo yo angi! What is it? Hurry up, I'm waiting for your projects!</p>
+                <span class="timestamp">1:00 AM</span>
+            </div>
+        </div>
+
+        <!-- Input field and Send button -->
+        <div class="chat-input">
+            <input type="text" id="user-input" placeholder="Type your message, Florina...">
+            <button id="send-button">Send</button>
+        </div>
+    </div>
+
+    <script>
+        // --- Core JavaScript Logic to Talk to the Flask Server ---
+
+        const chatWindow = document.getElementById('chat-window');
+        const userInput = document.getElementById('user-input');
+        const sendButton = document.getElementById('send-button');
+        const API_ENDPOINT = 'http://127.0.0.1:5000/send_message'; // Your Flask server URL
+
+        // Function to create a new message bubble and add it to the chat window
+        function createMessageElement(message, sender) {
+            const messageDiv = document.createElement('div');
+            messageDiv.classList.add('message');
+            messageDiv.classList.add(sender === 'user' ? 'user-message' : 'model-message');
+            
+            const p = document.createElement('p');
+            p.textContent = message;
+            messageDiv.appendChild(p);
+            
+            const timestamp = document.createElement('span');
+            timestamp.classList.add('timestamp');
+            timestamp.textContent = new Date().toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit' });
+            messageDiv.appendChild(timestamp);
+
+            chatWindow.appendChild(messageDiv);
+            
+            // Scroll to the bottom to see the new message
+            chatWindow.scrollTop = chatWindow.scrollHeight;
+        }
+
+        // Main function to handle sending and receiving messages
+        async function sendMessage() {
+            const message = userInput.value.trim();
+
+            if (message === "") return;
+
+            // 1. Display User Message
+            createMessageElement(message, 'user');
+            userInput.value = '';
+            sendButton.disabled = true;
+
+            try {
+                // 2. Send to Flask Backend
+                const response = await fetch(API_ENDPOINT, {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({ message: message }),
+                });
+
+                const data = await response.json();
+                const modelResponse = data.response;
+
+                // 3. Display Model Response
+                createMessageElement(modelResponse, 'model');
+
+            } catch (error) {
+                console.error('Error contacting the chatbot server:', error);
+                createMessageElement('Kalesh ho gaya! Server is probably down or too busy. Check your Python script.', 'model');
+            } finally {
+                sendButton.disabled = false;
+                userInput.focus();
+            }
+        }
+
+        // Event listeners for sending the message
+        sendButton.addEventListener('click', sendMessage);
+        userInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+        
+        // Focus on the input when the page loads
+        document.addEventListener('DOMContentLoaded', () => {
+            userInput.focus();
+        });
+
+    </script>
+</body>
+</html>

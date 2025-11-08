@@ -1,0 +1,118 @@
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 100vh;
+    background-color: #f4f7f6; /* Light gray background */
+}
+
+.chat-container {
+    width: 100%;
+    max-width: 450px;
+    height: 80vh;
+    border: 1px solid #ccc;
+    border-radius: 10px;
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+    display: flex;
+    flex-direction: column;
+    overflow: hidden;
+    background-color: white;
+}
+
+.chat-header {
+    background-color: #3f51b5; /* Blue for Neeraj */
+    color: white;
+    padding: 15px;
+    text-align: center;
+}
+
+.chat-header h2 {
+    margin: 0;
+    font-size: 1.4em;
+}
+
+.chat-header p {
+    margin: 2px 0 0;
+    font-size: 0.8em;
+    opacity: 0.9;
+}
+
+.chat-window {
+    flex-grow: 1;
+    padding: 15px;
+    overflow-y: auto;
+    background-color: #e5ddd5; /* Chat background */
+}
+
+/* Base message styles */
+.message {
+    max-width: 75%;
+    margin-bottom: 12px;
+    padding: 10px 15px;
+    border-radius: 18px;
+    line-height: 1.4;
+    word-wrap: break-word;
+    display: inline-block; /* Essential for alignment */
+}
+
+/* Styling for Neeraj (Model) messages */
+.model-message {
+    background-color: #ffffff; 
+    float: left;
+    clear: both; /* Ensures proper stacking */
+    border-bottom-left-radius: 2px;
+}
+
+/* Styling for Florina (User) messages */
+.user-message {
+    background-color: #dcf8c6; /* Light green */
+    float: right;
+    clear: both;
+    border-bottom-right-radius: 2px;
+}
+
+.message p {
+    margin: 0;
+}
+
+.timestamp {
+    display: block;
+    font-size: 0.7em;
+    color: #888;
+    text-align: right;
+    margin-top: 5px;
+}
+
+.chat-input {
+    display: flex;
+    padding: 10px;
+    border-top: 1px solid #ccc;
+    background-color: #f0f0f0;
+}
+
+.chat-input input {
+    flex-grow: 1;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    margin-right: 10px;
+    font-size: 1em;
+    outline: none;
+}
+
+.chat-input button {
+    padding: 10px 15px;
+    background-color: #3f51b5;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 1em;
+    transition: background-color 0.3s;
+}
+
+.chat-input button:hover {
+    background-color: #303f9f;
+}
