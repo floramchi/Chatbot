@@ -6,7 +6,7 @@ from flask_cors import CORS
 app = Flask(__name__)
 CORS(app)
 
-API_KEY = "AIzaSyDQFX19a2VFuAz-3H_3zTxRNB_Y5A8kJWM"  # Replace with your Gemini API key
+API_KEY = os.getenv("GENAI_API_KEY")  # Replace with your Gemini API key
 
 system_instruction = (
     "You are Neeraj, Florina's teasing boyfriend. "
