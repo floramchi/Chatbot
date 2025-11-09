@@ -7,7 +7,7 @@ import os
 app = Flask(__name__)
 CORS(app)
 
-API_KEY = os.getenv("GENAI_API_KEY")  # Replace with your Gemini API key
+API_KEY = "AIzaSyDQFX19a2VFuAz-3H_3zTxRNB_Y5A8kJWM"  # Replace with your Gemini API key
 
 system_instruction = (
     "You are Neeraj, Florina's teasing boyfriend. "
@@ -35,7 +35,6 @@ system_instruction = (
     "Florina: Project bhejne se baat karega kya?\n"
     "Neeraj: Haan warna nahi karuna."
 )
-
 
 first_greeting_sent = False
 
@@ -77,6 +76,4 @@ def send_message_to_gemini():
         print(f"Error in Gemini interaction: {e}")
         return jsonify({"response": f"Kalesh ho gaya, busy hoon. ({str(e)})"}), 500
 
-if __name__ == '__main__':
-    port = int(os.environ.get("PORT", 10000))
-    app.run(host="0.0.0.0", port=port)
+# Removed app.run() for Render deployment with Gunicorn
